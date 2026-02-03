@@ -1,0 +1,27 @@
+do_migrate() {
+    python3 manage.py makemigrations
+    python3 manage.py migrate
+}
+export do_migrate
+
+run_server() {
+    python3 manage.py runserver
+}
+export run_server
+
+init_workspace() {
+    if [[ ! -d djangoenv ]]; then
+        pip install --upgrade distro-info
+        pip3 install --upgrade pip==23.2.1
+        pip install virtualenv
+        virtualenv djangoenv
+    fi
+
+    source djangoenv/bin/activate
+
+    pip install -U -r requirements.txt
+}
+export init_workspace
+
+init_workspace
+do_migrate
